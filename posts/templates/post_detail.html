@@ -19,18 +19,20 @@
       <hr/>
     </div>
     <div class="col-4 mt-1">
-      {% if user == post.author or is_mod %}
       <form method="POST">
         {% csrf_token %}
         {% if user == post.author or is_mod %}
-      <button class="btn btn-success w-100">Edit</button>
-      <button class="btn btn-danger w-100 mt-3" name="delete" value="{{post.pk}}">Delete</button>
-    
-      {% endif %}
-      {% if user.ist_staff %}
-        <button class="btn btn-warning w-100 mt-3" name="ban" value="{{post.author}}">Ban Author</button>
-      {% endif %}
-    </form>
+          {% if not is_blocked %}
+            <a href="{% url 'post_update' post.pk %}">
+              <button type="button" class="btn btn-success w-100">Edit</button>
+            </a>
+          {% endif %}
+          <button class="btn btn-danger w-100 mt-3" name="delete" value="{{post.pk}}">Delete</button>
+        {% endif %}
+        {% if user.is_staff %}
+          <button class="btn btn-warning w-100 mt-3" name="block" value="{{post.author}}">Ban Author</button>
+        {% endif %}
+      </form>
     </div>
   </div>
 {% endblock content %}

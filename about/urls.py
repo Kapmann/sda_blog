@@ -1,8 +1,6 @@
 from django.urls import path
 from .views import about
 
-
-urlspatterns = [
+urlpatterns = [
     path("", about, name="about")
-
 ]
